@@ -14,7 +14,7 @@ class Forum(models.Model):
     created = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(MyUser, blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def num_posts(self):
