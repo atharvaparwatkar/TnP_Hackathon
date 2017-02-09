@@ -57,7 +57,7 @@ def forum(request, forum_id):
     forum = get_object_or_404(Forum, pk=forum_id)
 
     # return render(request, "forum/forum.html", add_csrf(request, topics=topics, pk=forum_id, forum=forum),)
-    return render(request, "forum/topic.html", {'topics': topics, 'pk': forum_id, 'forum': forum})
+    return render(request, "forum/forum.html", {'topics': topics, 'pk': forum_id, 'forum': forum})
 
 
 def topic(request, topic_id):
