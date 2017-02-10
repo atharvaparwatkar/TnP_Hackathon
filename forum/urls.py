@@ -9,3 +9,5 @@ urlpatterns = [
     url(r'^reply/(\d+)/$', views.post_reply, name='reply'),
     url(r'newtopic/(\d+)/$', views.new_topic, name='new-topic'),
 ]
+
+

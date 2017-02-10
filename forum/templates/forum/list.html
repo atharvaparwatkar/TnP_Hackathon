@@ -1,14 +1,22 @@
-{% load staticfiles %}
+{% extends 'forum/base.html' %}
 
+{% block title %}
+    <title>Forums</title>
+{% endblock %}
+
+{% block content %}
 <!-- Forums  -->
-<div id="list">
-    <table border="0" cellpadding="4" width="100%">
-        <tr>
-            <td></td>
-            <td>Posts</td>
-            <td>Last post</td>
-            <td></td>
-        </tr>
+<div id="list" class="container-fluid">
+{#    <table border="0" cellpadding="4" width="100%">#}
+           <div class="well">
+               <div class="row">
+                <div class=""></div>
+                <td>Posts</td>
+                <td>Last post</td>
+                <td></td>
+                </div>
+           </div>
+
         {% for forum in forums %}
             <tr>
                 <td {% if forloop.last %}class="last"{% endif %}>
@@ -23,3 +31,12 @@
             </tr>
         {% endfor %}
 </div>
+
+
+
+
+
+
+
+
+{% endblock %}

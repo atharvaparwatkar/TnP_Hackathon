@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^logout/', views.log_out, name='logout'),
     url(r'^edit_profile/', views.edit_prof, name='edit_profile'),
     url(r'^change_password/$', views.change_pw, name='change_password_form'),
+    url(r'^current_app/', views.current_app, name='current_app'),
    # url(r'^(?P<company_name>[\w\-]+)/$', views.company_details, name='company_details'),
     url(r'^(?P<company_id>[0-9]+)/$', views.company_details, name='company_details'),
     url(r'^register/$', views.apply, name='apply'),

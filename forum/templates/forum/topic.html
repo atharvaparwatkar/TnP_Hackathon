@@ -1,17 +1,51 @@
-{% load staticfiles %}
+{% extends 'forum/base.html' %}
 
-<!-- Posts  -->
-<div class="ttitle">{{ topic.title }}</div>
-<div id="list">
+{% block title %}
+    <title>Topics</title>
+{% endblock %}
+
+{% block content %}
+<!-- Threads  -->
+
+<div class="container">
+    <h1>{{ topic.title }}</h1>
+</div>
+
+
 
     {% for post in posts.object_list %}
-        <div class="post">
-            <span class="title">{{ post.title }}</span><br />
-            by {{ post.creator }} | <span class="date">{{ post.created }}</span> <br /><br />
-            {{ post.body }} <br />
+        <div class="container">
+           <div class="panel panel-warning">
+                  <div class="panel-heading">
+                     <strong  style="font-size: 14px"> {{ post.title }} </strong> &nbsp; <i  style="font-size: 10.5px">by {{ post.creator }}</i> <span style = " float:right "> {{ post.created }}</span>
+                  </div>
+                  <div class="panel-body">
+                       <p>
+                            {{ post.body }}
+                       </p>
+
+                  </div>
+            </div>
         </div>
     {% endfor %}
-</div>
+    <div class="container">
+    <a href="{%  url 'reply' pk %}" class="btn btn-primary btn-lg" role="button" id="new_topic" >Reply</a>
+    </div>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Next/Prev page links  -->
 {% if posts.object_list and posts.paginator.num_pages > 1 %}
@@ -31,4 +65,4 @@
     </span>
 </div>
 {% endif %}
-<a class="button" href="{% url 'reply' pk %}">Reply</a>
+

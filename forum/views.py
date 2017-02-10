@@ -52,12 +52,12 @@ def mk_paginator(request, items, num_items):
 def forum(request, forum_id):
     """Listing of topics in a forum."""
     topics = Topic.objects.filter(forum=forum_id).order_by("-created")
-    topics = mk_paginator(request, topics, DJANGO_SIMPLE_FORUM_TOPICS_PER_PAGE)
+    # topics = mk_paginator(request, topics, DJANGO_SIMPLE_FORUM_TOPICS_PER_PAGE)
 
     forum = get_object_or_404(Forum, pk=forum_id)
 
     # return render(request, "forum/forum.html", add_csrf(request, topics=topics, pk=forum_id, forum=forum),)
-    return render(request, "forum/topic.html", {'topics': topics, 'pk': forum_id, 'forum': forum})
+    return render(request, "forum/forum.html", {'topics': topics, 'pk': forum_id, 'forum': forum})
 
 
 def topic(request, topic_id):
@@ -118,3 +118,4 @@ def new_topic(request, forum_id):
         'form': form,
         'forum': forum,
     }, )
+

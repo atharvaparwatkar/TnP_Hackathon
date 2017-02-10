@@ -1,7 +1,42 @@
-{% load staticfiles %}
+{% extends 'forum/base.html' %}
 
-<form action="{% url 'reply' topic.id %}" method="POST">
+{% block title %}
+    <title>Reply</title>
+{% endblock %}
+
+{% block content %}
+<form class="" action="{% url 'reply' topic.id %}" method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
+    <div class="container">
+          <div class="row">
+                  <div class="col-md-2" style="margin-bottom: 10px ; font-weight: bold">
+                   <label for="id_title" style="margin-bottom: 10px ; font-weight: bold " >Title</label>
+                  </div>
+                  <div class="col-md-1" style="margin-bottom: 10px; font-weight: bold">
+                    :
+                  </div>
+                  <div class="col-md-7" style="margin-bottom: 10px">
+                   <input id="id_title" maxlength="60" name="title" type="text" required />
+                  </div>
+          </div>
+            <div class="row">
+                  <div class="col-md-2" style="margin-bottom: 10px; font-weight: bold">
+                   <label for="id_body">Body</label>
+                  </div>
+                  <div class="col-md-1" style="margin-bottom: 10px; font-weight: bold">
+                    :
+                  </div>
+                  <div class="col-md-7" style="margin-bottom: 10px">
+                    <textarea cols="40" id="id_body" maxlength="10000" name="body" rows="10" required></textarea>
+                  </div>
+          </div>
+        <input class="btn btn-info" type="submit" value="Submit" />
+    </div>
+
+
+
+
+
 </form>
+
+{% endblock %}

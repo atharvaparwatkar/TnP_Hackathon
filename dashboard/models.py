@@ -158,8 +158,8 @@ class Applications(models.Model):
     state = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
     zip = models.CharField(max_length=6)
-    company = models.OneToOneField(Companies, null=True)
-    user = models.OneToOneField(MyUser, null=True)
+    company = models.ForeignKey(Companies, null=True, unique=False)
+    user = models.ForeignKey(MyUser, null=True, unique=False)
 
     def __str__(self):
         return self.email

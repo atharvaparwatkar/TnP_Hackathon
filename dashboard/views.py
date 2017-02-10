@@ -151,47 +151,77 @@ def change_pw(request):
 
 @login_required
 def app_form(request, company_id):
-    if request.method == 'POST':
+    # if request.method == 'POST':
+    #
+    #     application = Applications()
+    #     application.title = request.POST['title']
+    #     application.f_name = request.POST['f_name']
+    #     application.m_name = request.POST['m_name']
+    #     application.l_name = request.POST['l_name']
+    #     application.gender = request.POST['gender']
+    #     application.dob = request.POST['dob']
+    #     application.email = request.POST['email']
+    #     application.mobile = request.POST['mob_no']
+    #     application.address = request.POST['address']
+    #     application.city = request.POST['city']
+    #     application.state = request.POST['state']
+    #     application.country = request.POST['country']
+    #     application.zip = request.POST['zip']
+    #
+    #     application.company = Companies.objects.get(pk=company_id)
+    #     application.user = request.user
+    #     application.save()
+    #     return redirect('dashboard:dashboard')
 
-        application = Applications()
-        application.title = request.POST['title']
-        application.f_name = request.POST['f_name']
-        application.m_name = request.POST['m_name']
-        application.l_name = request.POST['l_name']
-        application.gender = request.POST['gender']
-        application.dob = request.POST['dob']
-        application.email = request.POST['email']
-        application.mobile = request.POST['mob_no']
-        application.address = request.POST['address']
-        application.city = request.POST['city']
-        application.state = request.POST['state']
-        application.country = request.POST['country']
-        application.zip = request.POST['zip']
+        # msg = 'Please enter the same email address used for registration.'
+        #
+        # context = {
+        #     'management_companies': Companies.objects.filter(company_type='Management'),
+        #     'it_companies': Companies.objects.filter(company_type='IT'),
+        #     'core_companies': Companies.objects.filter(company_type='Core'),
+        #     'msg': msg,
+        # }
+        # return render(request, 'dashboard/temp.html', context)
 
-        application.company = Companies.objects.get(pk=company_id)
-        application.user = request.user
-        application.save()
-        return redirect('dashboard:dashboard')
-
-        msg = 'Please enter the same email address used for registration.'
-
-        context = {
-            'management_companies': Companies.objects.filter(company_type='Management'),
-            'it_companies': Companies.objects.filter(company_type='IT'),
-            'core_companies': Companies.objects.filter(company_type='Core'),
-            'msg': msg,
-        }
-        return render(request, 'dashboard/temp.html', context)
-
-    comp = Companies.objects.get(id=company_id)
+    # comp = Companies.objects.get(pk=company_id).pk
     try:
-        application = Applications.objects.get(company=comp, user=request.user)
+        application = Applications.objects.get(company=company_id, user=request.user.pk)
         context = {
             'management_companies': Companies.objects.filter(company_type='Management'),
             'it_companies': Companies.objects.filter(company_type='IT'),
             'core_companies': Companies.objects.filter(company_type='Core'),
+            'title': application.title,
             'f_name': application.f_name,
-        }
+            'm_name': application.m_name,
+            'l_name': application.l_name,
+            'gender': application.gender ,
+            'dob': application.dob,
+            'email': application.email,
+            'mob_no': application.mobile,
+            'address': application.address,
+            'city': application.city,
+            'state': application.state,
+            'country': application.country,
+            'zip': application.zip,
+                 }
+
+        if request.method == 'POST':
+            application.title = request.POST['title']
+            application.f_name = request.POST['f_name']
+            application.m_name = request.POST['m_name']
+            application.l_name = request.POST['l_name']
+            application.gender = request.POST['gender']
+            application.dob = request.POST['dob']
+            application.email = request.POST['email']
+            application.mobile = request.POST['mob_no']
+            application.address = request.POST['address']
+            application.city = request.POST['city']
+            application.state = request.POST['state']
+            application.country = request.POST['country']
+            application.zip = request.POST['zip']
+            application.save()
+
+            return redirect('dashboard:dashboard')
 
         return render(request, 'dashboard/app_form.html', context)
 
@@ -201,6 +231,28 @@ def app_form(request, company_id):
             'it_companies': Companies.objects.filter(company_type='IT'),
             'core_companies': Companies.objects.filter(company_type='Core'),
         }
+
+        if request.method == 'POST':
+            application = Applications()
+            application.title = request.POST['title']
+            application.f_name = request.POST['f_name']
+            application.m_name = request.POST['m_name']
+            application.l_name = request.POST['l_name']
+            application.gender = request.POST['gender']
+            application.dob = request.POST['dob']
+            application.email = request.POST['email']
+            application.mobile = request.POST['mob_no']
+            application.address = request.POST['address']
+            application.city = request.POST['city']
+            application.state = request.POST['state']
+            application.country = request.POST['country']
+            application.zip = request.POST['zip']
+
+            application.company = Companies.objects.get(pk=company_id)
+            application.user = request.user
+            application.save()
+            return redirect('dashboard:dashboard')
+
         return render(request, 'dashboard/app_form.html', context)
     # if application is not None:
     #     context = {
@@ -291,3 +343,9 @@ def apply(request):
         # return render(request, 'dashboard/temp.html', context)
     else:
         return render(request, 'dashboard/temp.html')
+
+
+def current_app (request):
+    apps = Applications.objects.filter(user = request.user)
+    context = {'apps' : apps , 'SP': 'SP'}
+    return render(request, 'dashboard/current_app.html', context )
