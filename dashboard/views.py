@@ -79,7 +79,7 @@ def log_in(request):
 @login_required
 def log_out(request):
     logout(request)
-    return redirect('home')
+    return redirect('home:home')
 
 @login_required
 def edit_prof(request):

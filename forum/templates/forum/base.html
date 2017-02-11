@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-      {% block title %}
-      {% endblock %}
-      {% load staticfiles %}
+    {% block title %}
+    {% endblock %}
+    {% load staticfiles %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="{% static 'home/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -21,7 +21,7 @@
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{% url 'home' %}" style="padding: 0px; margin-left: 20px;"><img src="{% static 'home/images/logo.png' %}" style="padding: 0px; height: 45px; margin-top: 2px;"/></a>
+          <a class="navbar-brand" href="{% url 'home:home' %}" style="padding: 0px; margin-left: 20px;"><img src="{% static 'home/images/logo.png' %}" style="padding: 0px; height: 45px; margin-top: 2px;"/></a>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -32,12 +32,14 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
             <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
-            <li><a href="for_students.html">For Students</a></li>
-            <li><a href="for_companies.html">For Companies</a></li>
+            <li><a href="http://127.0.0.1:8000/forum/2">Forum</a></li>
+              {#<li><a href="{% url 'forum:forum-detail' %}/2">Forum</a></li>#}
+            <li><a href="{% url 'home:for_students' %}">For Students</a></li>
+            <li><a href="{% url 'home:for_companies' %}">For Companies</a></li>
               {% if request.user.is_authenticated %}
                   <li><a href="{% url 'dashboard:logout' %}">Logout</a></li>
               {% else %}
-                  <li><a href="{% url 'dashboard:login' %}">Log In</a></li>
+                  <li><a href="{% url 'dashboard:login' %}">Login</a></li>
               {% endif %}
 
           </ul>
@@ -111,8 +113,8 @@
 {#    </div>#}
 
 
- {% block content %}
-  {% endblock %}
+    {% block content %}
+    {% endblock %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>

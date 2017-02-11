@@ -8,7 +8,7 @@
 <!-- Threads  -->
 <div class="container">
     <p>
-     <a href="{% url 'new-topic' pk %}" class="btn btn-primary btn-lg active" role="button" id="new_topic">Start New Topic</a>
+     <a href="{% url 'forum:new-topic' pk  %}" class="btn btn-success btn-md " role="button" id="new_topic">Start New Topic</a>
     </p>
 </div>
 
@@ -69,12 +69,15 @@
                      <h4> {{ topic.title }} </h4>
                   </div>
                   <div class="panel-body">
+                      <p>
+                          {{ topic.description }}
+                      </p>
                        <p>
                            <b> No of posts: </b>{{ topic.num_replies }}
                        </p>
                         <p>
-                            <b> Created by: </b>{{ topic.last_post.short|linebreaksbr }}
-                            <a class=" btn btn-primary " href="{% url 'topic-detail' topic.pk %}" style = " float:right " > VIEW </a>
+                            <b> Created by: </b>{{ topic.creator.full_name|linebreaksbr }}
+                            <a class=" btn btn-primary " href="{% url 'forum:topic-detail' topic.pk %}" style = " float:right " > VIEW </a>
                         </p>
                   </div>
             </div>

@@ -8,8 +8,19 @@
 <!-- Threads  -->
 
 <div class="container">
-    <h1>{{ topic.title }}</h1>
+<div class="panel panel-info">
+                  <div class="panel-heading">
+    <h3>{{ topic.title }}</h3>
+                      </div>
+    <div class="panel-body">
+    <h5>
+    <p>
+        {{ topic.description }}
+    </p>
+        </div>
+        </h5>
 </div>
+
 
 
 
@@ -29,7 +40,7 @@
         </div>
     {% endfor %}
     <div class="container">
-    <a href="{%  url 'reply' pk %}" class="btn btn-primary btn-lg" role="button" id="new_topic" >Reply</a>
+    <a href="{%  url 'forum:reply' pk %}" class="btn btn-primary btn-md" role="button" id="new_topic" >Reply</a>
     </div>
 
 

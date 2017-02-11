@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form class="" action="{% url 'reply' topic.id %}" method="POST">
+<form class="" action="{% url 'forum:reply' topic.id %}" method="POST">
     {% csrf_token %}
     <div class="container">
           <div class="row">

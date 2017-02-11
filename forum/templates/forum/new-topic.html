@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form class="" action = "{% url 'new-topic' forum.id %}" method="POST">
+<form class="" action = "{% url 'forum:new-topic' forum.id %}" method="POST">
     {% csrf_token %}
     <div class="container">
           <div class="row">
@@ -27,7 +27,7 @@
                     :
                   </div>
                   <div class="col-md-7" style="margin-bottom: 10px">
-                    <textarea cols="40" id="id_body" maxlength="10000" name="body" rows="10" required></textarea>
+                    <textarea cols="40" id="id_body" maxlength="10000" name="description" rows="10" required></textarea>
                   </div>
           </div>
         <input class="btn btn-info" type="submit" value="Submit" />

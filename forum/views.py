@@ -51,6 +51,9 @@ def mk_paginator(request, items, num_items):
 
 def forum(request, forum_id):
     """Listing of topics in a forum."""
+
+    # forum_id = 2
+
     topics = Topic.objects.filter(forum=forum_id).order_by("-created")
     # topics = mk_paginator(request, topics, DJANGO_SIMPLE_FORUM_TOPICS_PER_PAGE)
 
@@ -87,7 +90,7 @@ def post_reply(request, topic_id):
 
             post.save()
 
-            return HttpResponseRedirect(reverse('topic-detail', args=(topic.id,)))
+            return HttpResponseRedirect(reverse('forum:topic-detail', args=(topic.id,)))
 
     return render(request, 'forum/reply.html', {
         'form': form,
@@ -112,7 +115,7 @@ def new_topic(request, forum_id):
 
             topic.save()
 
-            return HttpResponseRedirect(reverse('forum-detail', args=(forum_id,)))
+            return HttpResponseRedirect(reverse('forum:forum-detail', args=(forum_id,)))
 
     return render(request, 'forum/new-topic.html', {
         'form': form,
