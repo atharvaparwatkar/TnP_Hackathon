@@ -22,7 +22,8 @@ def dashboard(request):
                 'id_no'     : request.user.id_no,
                 'cgpa'      : request.user.cgpa,
                 'branch'    : request.user.branch,
-                'full_name' : request.user.full_name,
+                'first_name' : request.user.first_name,
+                'last_name': request.user.last_name,
 
             }
             return render(request, 'dashboard/index.html', context)
@@ -94,7 +95,8 @@ def edit_prof(request):
             msg = "Changes Saved."
             # return render(request, 'dashboard/edit_prof.html', {'msg': 'Changes Saved'})
 
-    full_name = request.user.full_name
+    last_name = request.user.last_name
+    first_name = request.user.first_name
     enr_no = request.user.enr_no
     id_no = request.user.id_no
     cgpa = request.user.cgpa
@@ -109,7 +111,8 @@ def edit_prof(request):
         'management_companies': Companies.objects.filter(company_type='Management'),
         'it_companies': Companies.objects.filter(company_type='IT'),
         'core_companies': Companies.objects.filter(company_type='Core'),
-        'full_name' : full_name,
+        'last_name' : last_name,
+        'first_name': first_name,
         'enr_no'    : enr_no,
         'id_no'     : id_no,
         'cgpa'      : cgpa,

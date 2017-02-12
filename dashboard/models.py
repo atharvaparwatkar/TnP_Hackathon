@@ -51,6 +51,8 @@ BRANCHES = {
     ('META',    'Metallurgy'),
     ('MIN',     'Mining'),
     ('ARCH',    'Architecture'),
+    ('EEE',    'Electrical and Electronics Engineering'),
+    ('ECE',    'Electronics and Communication Engineering'),
 }
 
 
@@ -60,14 +62,16 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    id_no       = models.CharField(max_length=10, null=True)
-    full_name   = models.CharField(max_length=50, null=True)
+    id_no       = models.IntegerField(null=True)
+    first_name  = models.CharField(max_length=50, null=True)
+    last_name   = models.CharField(max_length=50, null=True)
     # branch      = models.CharField(max_length=50, null=True)
     branch      = models.CharField(max_length=4, choices=BRANCHES)
-    enr_no      = models.CharField(max_length=20, null=True)
+    enr_no      = models.CharField(max_length=11, null=True)
     cgpa        = models.FloatField(max_length=5, null=True)
     is_active   = models.BooleanField(default=True)
     is_admin    = models.BooleanField(default=False)
+    resume      = models.FileField(null=True)
 
     objects = MyUserManager()
 
@@ -76,11 +80,11 @@ class MyUser(AbstractBaseUser):
 
     def get_full_name(self):
         # The user is    identified by their email address
-        return self.full_name
+        return self.first_name
 
     def get_short_name(self):
         # The user is identified by their email address
-        return self.full_name
+        return self.first_name
 
     def __str__(self):              # __unicode__ on Python 2
         return self.email
@@ -116,7 +120,6 @@ class Companies(models.Model):
 
     company_name = models.CharField(max_length=250)
     company_type = models.CharField(max_length=100)
-    company_dept = models.CharField(max_length=4, choices=BRANCHES)
     user = models.ManyToManyField(MyUser)
     req_cgpa = models.FloatField(max_length=5, null=True)
     last_date = models.DateField(null=True)

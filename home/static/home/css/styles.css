@@ -1,3 +1,9 @@
+body,html {
+    overflow: hidden;
+    width: 100%;
+
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
   background-color: #f7f7f7;
@@ -687,7 +693,7 @@ nav.navbar > .container-fluid > ul > li a:active{
     background: #282828 !important;
 }
 .navbar-inverse .navbar-nav > li > a{
-    color: #fff;
+    color: #fff !important;
 }
 .navbar-inverse .navbar-nav > li > a:hover{
         background: #282828;
@@ -696,3 +702,71 @@ nav.navbar > .container-fluid > ul > li a:active{
 a:active{
     background: #282828 !important;
 }
+marquee {
+        background: #fff;
+        font-family:inherit;
+        font-size: 18px;
+        color: #666;
+        font-weight: 300;
+}
+#news a{
+    color:#767e86;
+}
+.logo{
+      width:9%;height:100px;background: #003;float:left;
+    }
+    .back{
+      float:left;
+      width: 82%;
+    	height: 100px;
+      background: #003 url("{% static 'home/images/bg.jpg' %}") no-repeat ;
+
+    }
+
+      header h1 {
+        color: #990;
+        padding-top:10px;
+        letter-spacing:0;
+          font-size: 40px;
+        /*border-bottom:none ; */
+        display: block;
+        text-align: center;
+
+    }
+      header h1 b{
+        font-weight:normal;
+        color: #759;
+
+      }
+
+    header h1 strong {
+    	font-weight:normal;
+    	color: #2A5BBB;
+    }
+    .vnit{
+      color:white;
+      text-align: center;
+      font-size: 15px;
+      letter-spacing: 4px;
+      font-weight: bolder;
+      padding-top:10px;
+      }
+    nav {
+        clear: both !important;
+    }
+     .dropdown .dropdown-menu {
+        border-radius: 5px;
+      }
+    .dropdown .dropdown-menu > li > a {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        margin-bottom: 0;
+        font-weight: normal;
+        color: #fff;
+        text-align: center;
+        background-color: #2c3742 /* Old browsers */
+
+      }
+    .navbar{
+        margin-bottom: 0;
+    }

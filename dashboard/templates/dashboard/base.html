@@ -55,13 +55,17 @@
 		  <div class="{% block cols %}{% endblock %}" id="student_detail">
 		  	<div class="row" style="margin: 0;">
 		  		<div class="col-md-12 panel-warning">
+
                     {% if not WP %}
 		  			<div class="content-box-header panel-heading">
+                                  {% if request.user.is_authenticated %}
+
 	  					<div class="panel-title " id="title" >
                                 {% block content_heading %}
                                 {% endblock %}
                         </div>
                         {% if not SP %}
+
 						<div class="panel-options">
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i></a>
                               <ul class="dropdown-menu animated fadeInUp" style="position: relative">
@@ -71,6 +75,7 @@
                               </ul>
 						</div>
                         {% endif %}
+                        {% endif %}
 		  			</div>
                     {% endif %}
 
@@ -78,6 +83,7 @@
                 {% endblock %}
 
 		  		</div>
+
 		  	</div>
 		  </div>
 
