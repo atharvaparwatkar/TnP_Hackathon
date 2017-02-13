@@ -360,13 +360,14 @@
         </div>
       </div>
     </nav>
-
+    {% if all_sensitive_news %}
     <marquee class="fonty" style="padding:2px">
             {% for news in all_sensitive_news %}
                 <span class="label label-danger">NEWS</span>
                 <code>{{ news.news }}</code> &nbsp;
             {% endfor %}
     </marquee>
+    {% endif %}
     <div class="row">
             <div class="col-lg-9">
               <!-- Carousel

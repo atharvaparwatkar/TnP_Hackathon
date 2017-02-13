@@ -12,8 +12,9 @@
 			        <div class="box">
 			                <h6>Sign In</h6>
                             {% if error_message %}
-                                <p><strong>{{ error_message }}</strong></p>
+                                <div class="label label-danger"style="font-size: 12px;margin-bottom: 10px;">{{ error_message }}</div>
                             {% endif %}
+                            <br><br>
                             <form action="" class="content-wrap" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <label for="id_email" style="display: none;">Email address:</label>
