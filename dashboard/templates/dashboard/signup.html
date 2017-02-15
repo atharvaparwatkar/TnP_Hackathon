@@ -12,6 +12,7 @@
 			        <div class="box">
 			            <div class="content-wrap">
 			                <h6>Sign Up</h6>
+                            <div style="color: red">{{ error_message }}</div><br><br>
                       <form name="sign_up_form" method="post" action="" onsubmit="" enctype="multipart/form-data">
                           {% csrf_token %}
 {#                          {% for field in form %}#}
