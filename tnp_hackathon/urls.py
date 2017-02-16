@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^dashboard/', include('dashboard.urls', namespace="dashboard")),
     url(r'^', include('home.urls')),
     url(r'^forum/', include('forum.urls')),
+    url(r'^admn/', include('admn.urls')),
 ]
