@@ -15,7 +15,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('first_name', 'last_name', 'email', 'branch', 'id_no', 'enr_no', 'cgpa',)
+        fields = ('first_name', 'last_name', 'email', 'branch', 'id_no', 'enr_no', 'cgpa', 'resume')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -68,7 +68,17 @@ class EditProfileForm(forms.ModelForm):
 #     class Meta:
 #         model = MyUser
 #         fields = ('email', 'password')
+#
+class EditApplication(forms.ModelForm):
+    """A form for updating users. Includes all the fields on
+    the user, but replaces the password field with admin's
+    password hash display field.
+    """
+    # password = ReadOnlyPasswordHashField()
 
+    class Meta:
+        model = Applications
+        fields = ('f_name', 'l_name', 'address')
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
@@ -78,11 +88,11 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'first_name', 'last_name', 'id_no', 'enr_no', 'cgpa', 'is_admin')
+    list_display = ('email', 'first_name', 'last_name', 'id_no', 'enr_no', 'cgpa','resume','branch','is_admin')
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('id_no', 'enr_no', 'cgpa',)}),
+        ('Personal info', {'fields': ('id_no', 'enr_no', 'cgpa', 'branch', 'resume')}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -90,7 +100,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'id_no', 'enr_no', 'cgpa', 'password1', 'password2')}
+            'fields': ('first_name', 'last_name', 'email', 'id_no', 'branch', 'enr_no', 'cgpa', 'password1', 'password2')}
         ),
     )
     search_fields = ('email',)
