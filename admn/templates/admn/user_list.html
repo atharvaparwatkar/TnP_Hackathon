@@ -1,7 +1,7 @@
 {% extends 'admn/base.html' %}
 
 {% block title %}
-    <title>Topics</title>
+    <title>Users</title>
 {% endblock %}
 
 {% block content %}
@@ -11,7 +11,7 @@
 <div class="panel panel-info"  style="margin-top: 10px;">
     <div class="panel-heading" style="height: 60px;">
         <h3 style="display: inline; height: 100px;">
-            <a href="{%  url 'admn:users' %}">Users</a>
+            Pending Approval Requests
 {#            <a href="{%  url 'admn:add_companies' %}" style="text-decoration: none;" class="glyphicon glyphicon-plus" aria-hidden="true"role="button" id="new_topic" ></a>#}
 {#            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>#}
         </h3>
@@ -26,6 +26,7 @@
                 <button class="btn btn-primary btn-md" type="submit" role="button" id="new_topic" >Submit</button>
             </form>
         </div>
+        <p>(Count = {{ p_user.count }})</p>
     </div>
 </div>
 
@@ -41,11 +42,35 @@
 
                       <div style="width: 30%; display: inline-block;">
                       </div>
-                      <span style="float: right"><a href="{% url 'admn:acceptuser' p.id %}" class="btn btn-primary btn-md" role="button" id="new_topic" >Accept</a></span>
+                      <span style="float: right"><a href="{% url 'admn:viewuser' p.id%}" class="btn btn-primary btn-md" role="button" id="new_topic" >View Application</a></span>
+                      <span style="float: right"><a onclick="toggleUserState({{ p.id }})" class="btn btn-primary btn-md" role="button" id="new_topic" >Accept</a></span>
+                      <span style="float: right"><a onclick="deleteUser({{ p.id }})" class="btn btn-primary btn-md" role="button" id="new_topic" >Reject</a></span>
                   </div>
             </div>
         </div>
     {% endfor %}
+
+    <div class="panel panel-info"  style="margin-top: 10px;">
+    <div class="panel-heading" style="height: 60px;">
+        <h3 style="display: inline; height: 100px;">
+            Users
+{#            <a href="{%  url 'admn:add_companies' %}" style="text-decoration: none;" class="glyphicon glyphicon-plus" aria-hidden="true"role="button" id="new_topic" ></a>#}
+{#            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>#}
+        </h3>
+        <p>(Count = {{ user.count }})</p>
+{#    </div>#}
+{#    <div class="panel-body">#}
+{#        <a href="{%  url 'admn:add_companies' %}" style="float: right;" class="btn btn-primary btn-md" role="button" id="new_topic" >Add Companies</a>#}
+        <div style="float: right;">
+{#            <form action="" method="get" enctype="multipart/form-data">#}
+{#                {% csrf_token %}#}
+{#                <input class="form-control" id="id_first_name" maxlength="50" name="query" type="text"#}
+{#                                               style="width: 200px; display: inline;" placeholder="Search"/>#}
+{#                <button class="btn btn-primary btn-md" type="submit" role="button" id="new_topic" >Submit</button>#}
+{#            </form>#}
+        </div>
+    </div>
+</div>
 
     {% for u in user %}
         <div class="container">
@@ -57,7 +82,7 @@
 
                       <div style="width: 30%; display: inline-block;">
                       </div>
-{#                      <span style="float: right"><a href="{% url 'admn:edit_companies' company.id %}" class="btn btn-primary btn-md" role="button" id="new_topic" >Edit</a></span>#}
+                      <span style="float: right"><a href="{% url 'admn:viewuser' u.id %}" class="btn btn-primary btn-md" role="button" id="new_topic" >View User</a></span>
                   </div>
             </div>
         </div>

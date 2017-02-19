@@ -42,6 +42,7 @@ def signup(request):
         password = form.cleaned_data['password1']
         user.set_password(password)
         user.is_active = False
+        user.is_admin = False
         user.save()
         user = authenticate(email=email, password=password)
         if user is not None:
@@ -49,7 +50,7 @@ def signup(request):
                 login(request, user)
                 return redirect("dashboard:dashboard")
         else:
-            return HttpResponse("Some thing was wrong.")
+            return HttpResponse("Your approval request has been sent and will be processed in next 3 days.")
     # else:
     #     return HttpResponse("Form is not valid.")
 

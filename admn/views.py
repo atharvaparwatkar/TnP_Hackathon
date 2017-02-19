@@ -1,11 +1,51 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from dashboard.models import Companies, MyUser
+from django.contrib.auth import authenticate, login, logout
 from .admin import CompanyCreationForm, CompanyChangeForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 
-@login_required
+def isUserAdmin(MyUser):
+    if MyUser.is_authenticated:
+        if MyUser.is_admin == True:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
+def admn_index(request):
+    return render(request, 'admn/admn_index.html')
+
+def admn_login(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = authenticate(email=email, password=password)
+        if user is not None:
+            if user.is_active:
+                if user.is_admin:
+                    login(request, user)
+                    return redirect("admn:admnindex")
+                else:
+                    return render(request, 'admn/admn_login.html',
+                                  {'error_message': "Please login with an admin ID."})
+            else:
+                return render(request, 'admn/admn_login.html',
+                              {'error_message': "This account is disabled. Please contact administration."})
+        else:
+            return render(request, 'admn/admn_login.html',
+                          {'error_message': "Invalid Credentials"})
+    return render(request, 'admn/admn_login.html')
+
+def admn_logout(request):
+    logout(request)
+    return redirect('home:home')
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
 def companies(request):
     # compaies = Companies.objects.values('company_name', 'id', 'applications__user__applications').order_by('-id')
 
@@ -21,7 +61,7 @@ Company_Type = [
     'Management',
 ]
 
-@login_required
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
 def add_company(request):
     form = CompanyCreationForm(data=request.POST)
 
@@ -41,7 +81,7 @@ def add_company(request):
     return render(request, 'admn/new_company.html')
 
 
-@login_required
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
 def edit_company(request, company_id):
     form = CompanyChangeForm(data=request.POST, instance=Companies.objects.get(pk=company_id))
 
@@ -64,7 +104,7 @@ def edit_company(request, company_id):
     }
     return render(request, 'admn/edit_company.html', context)
 
-@login_required
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
 def users(request):
 
     if 'query' in request.GET:
@@ -75,12 +115,58 @@ def users(request):
         user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
     return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
 
-@login_required
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
 def accept_user(request, user_id):
 
     curr_user = MyUser.objects.get(pk = user_id)
-    curr_user.is_active = True
+    curr_user.is_active = not curr_user.is_active
     curr_user.save()
+    p_user = MyUser.objects.filter(is_admin=False, is_active=False).order_by('-id')
+    user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
+
+    return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
+def delete_user(request, user_id):
+    curr_user = MyUser.objects.get(pk=user_id)
+    curr_user.delete()
+    p_user = MyUser.objects.filter(is_admin=False, is_active=False).order_by('-id')
+    user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
+
+    return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
+def view_user(request, user_id):
+    if request.method == 'POST':
+        user = MyUser.objects.get(pk = user_id)
+        user.first_name = request.POST['f_name']
+        user.last_name = request.POST['l_name']
+        user.branch = request.POST['branch']
+        user.id_no = request.POST['id_no']
+        user.enr_no = request.POST['enr_no']
+        user.cgpa = request.POST['cgpa']
+        if user.is_active == True:
+            if request.POST['act'] == 'False':
+                user.is_active = False
+        elif user.is_active == False:
+            user.is_active = True
+        user.save()
+
+        # p_user = MyUser.objects.filter(is_admin=False, is_active=False).order_by('-id')
+        # user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
+
+        # return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
+        return redirect('admn:users')
+    curr_user = MyUser.objects.get(pk=user_id, is_admin=False)
+    if curr_user is not None:
+        return render(request, 'admn/view_user.html', {'curr_user': curr_user})
+    else:
+        return render(request, 'admn/view_user.html')
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
+def delete_user2(request, user_id):
+    curr_user = MyUser.objects.get(pk=user_id)
+    curr_user.delete()
     p_user = MyUser.objects.filter(is_admin=False, is_active=False).order_by('-id')
     user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
 

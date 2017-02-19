@@ -32,3 +32,36 @@ function validateForm()
     return false;
   }
 }
+
+function toggleUserState(user_id) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            location.reload();
+        }
+    };
+    xhttp.open("GET", user_id, true);
+    xhttp.send();
+}
+
+function deleteUser(user_id) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            location.reload();
+        }
+    };
+    xhttp.open("GET", user_id + "d", true);
+    xhttp.send();
+}
+
+function viewUser(user_id) {
+    var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function () {
+        //     if (xhttp.readyState == 4 && xhttp.status == 200) {
+        //
+        //     }
+        // };
+    xhttp.open("GET", user_id + "p", true);
+    xhttp.send();
+}

@@ -31,15 +31,15 @@
 
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
-            <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
-            <li><a href="http://127.0.0.1:8000/forum/2">Forum</a></li>
+{#            <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>#}
+{#            <li><a href="http://127.0.0.1:8000/forum/2">Forum</a></li>#}
               {#<li><a href="{% url 'forum:forum-detail' %}/2">Forum</a></li>#}
-            <li><a href="{% url 'home:for_students' %}">For Students</a></li>
-            <li><a href="{% url 'home:for_companies' %}">For Companies</a></li>
+{#            <li><a href="{% url 'home:for_students' %}">For Students</a></li>#}
+{#            <li><a href="{% url 'home:for_companies' %}">For Companies</a></li>#}
               {% if request.user.is_authenticated %}
-                  <li><a href="{% url 'dashboard:logout' %}">Logout</a></li>
+                  <li><a href="{% url 'admn:admnlogout' %}">Logout</a></li>
               {% else %}
-                  <li><a href="{% url 'dashboard:login' %}">Login</a></li>
+                  <li><a href="{% url 'admn:admnlogin' %}">Login</a></li>
               {% endif %}
 
           </ul>
@@ -75,8 +75,16 @@
 {#		  			</div>#}
 {#                    {% endif %}#}
 {##}
-{#                {% block content %}#}
-{#                {% endblock %}#}
+<div class="page-content">
+{#    	<div class="row">#}
+{#            <div class="{% block cols %}{% endblock %}" id="student_detail">#}
+{#                <div class="row" style="margin: 0;">#}
+        {% block content %}
+        {% endblock %}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+</div>
 {##}
 {#		  		</div>#}
 {#		  	</div>#}
@@ -113,8 +121,8 @@
 {#    </div>#}
 
 
-    {% block content %}
-    {% endblock %}
+{#    {% block content %}#}
+{#    {% endblock %}#}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>

@@ -1,0 +1,53 @@
+{% extends 'admn/base.html' %}
+
+{% block title %}
+    <title>Users</title>
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-2">
+		  	<div class="sidebar content-box" style="display: block; margin-top: 40px">
+                <ul class="nav">
+                    <!-- Main menu -->
+{#                    <li class="current"><a href="{% url 'dashboard:dashboard' %}"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>#}
+                    <li>
+                         <a href="{% url 'admn:users' %}">
+                            <i></i> Users
+                         </a>
+                         <!-- Sub menu -->
+                    </li>
+                    <li>
+                         <a href="{% url 'admn:companies' %}">
+                            <i></i> Companies
+                         </a>
+                         <!-- Sub menu -->
+                    </li>
+                    <li>
+                         <a>
+                            <i></i> Applications
+                         </a>
+                         <!-- Sub menu -->
+                    </li>
+{#                         <!ul style="display: block;">#}
+{#                            <li class="submenu">#}
+{#                              <a href="#">#}
+{#                                <i class="glyphicon glyphicon-list"></i> Users#}
+{#                                <span class="caret pull-right"></span>#}
+{#                              </a>#}
+{#                            </li>#}
+{#                            <li class="submenu">#}
+{#                              <a href="#">#}
+{#                                <i class="glyphicon glyphicon-list"></i> Companies#}
+{#                                <span class="caret pull-right"></span>#}
+{#                              </a>#}
+{#                            </li>#}
+{#                            <li class="submenu">#}
+{#                              <a href="#">#}
+{#                                <i class="glyphicon glyphicon-list"></i> Applications#}
+{#                                <span class="caret pull-right"></span>#}
+{#                              </a>#}
+{#                    </li>#}
+                </ul>
+             </div>
+		  </div>
+{% endblock %}
