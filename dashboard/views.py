@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from dashboard.admin import UserChangeForm, UserCreationForm
+from dashboard.admin import UserChangeForm, UserCreationForm, EditApplication
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -32,11 +32,21 @@ def dashboard(request):
             # return redirect('dashboard:login')
     # else:
     #     return redirect('signup')
+RESUME_FILE_TYPES = ['pdf']
 
 
 def signup(request):
-    form = UserCreationForm(request.POST or None)
+    form = UserCreationForm(request.POST or None, request.FILES or None)
     if form.is_valid():
+        form.resume = request.FILES['resume']
+        file_type = form.resume.name.split('.')[-1]
+        if file_type not in RESUME_FILE_TYPES:
+            context = {
+                'form': form,
+                'error_message': 'Resume file must be PDF',
+                'WP': 'WP',
+            }
+            return render(request, 'dashboard/signup.html', context)
         user = form.save(commit=False)
         email = form.cleaned_data['email']
         password = form.cleaned_data['password1']
@@ -354,3 +364,68 @@ def current_app (request):
     apps = Applications.objects.filter(user = request.user)
     context = {'apps' : apps , 'SP': 'SP'}
     return render(request, 'dashboard/current_app.html', context )
+
+
+def view_appl(request, app_id):
+    application = Applications.objects.get(pk=app_id)
+    context = {
+        'management_companies': Companies.objects.filter(company_type='Management'),
+        'it_companies': Companies.objects.filter(company_type='IT'),
+        'core_companies': Companies.objects.filter(company_type='Core'),
+        'title': application.title,
+        'f_name': application.f_name,
+        'm_name': application.m_name,
+        'l_name': application.l_name,
+        'gender': application.gender,
+        'dob': application.dob,
+        'email': application.email,
+        'mob_no': application.mobile,
+        'address': application.address,
+        'city': application.city,
+        'state': application.state,
+        'country': application.country,
+        'zip': application.zip,
+    }
+    return render(request, 'dashboard/app.html', context)
+
+
+def edit_appl(request, app_id):
+    application = Applications.objects.get(pk=app_id)
+    form = EditApplication(data=request.POST, instance=application)
+
+    msg = "Press 'Save Changes' to make changes."
+
+    if request.method == 'POST':
+        if form.is_valid():
+            application = form.save()
+            application.save()
+            msg = "Changes Saved."
+            # return render(request, 'dashboard/edit_prof.html', {'msg': 'Changes Saved'})
+
+    title = application.title
+    f_name = application.f_name
+    m_name = application.m_name
+
+    # if request.method == "POST":
+    #     cgpa = request.POST['cgpa']
+    #     MyUser.cgpa = cgpa
+
+    context = {
+        'management_companies': Companies.objects.filter(company_type='Management'),
+        'it_companies': Companies.objects.filter(company_type='IT'),
+        'core_companies': Companies.objects.filter(company_type='Core'),
+        'title': application.title,
+        'f_name': application.f_name,
+        'm_name': application.m_name,
+        'l_name': application.l_name,
+        'gender': application.gender,
+        'dob': application.dob,
+        'email': application.email,
+        'mob_no': application.mobile,
+        'address': application.address,
+        'city': application.city,
+        'state': application.state,
+        'country': application.country,
+        'zip': application.zip,
+    }
+    return render(request, 'dashboard/edit_appl.html', context)

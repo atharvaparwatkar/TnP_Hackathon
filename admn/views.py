@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from dashboard.models import Companies, MyUser
+from dashboard.models import Companies, MyUser, Applications
 from django.contrib.auth import authenticate, login, logout
 from .admin import CompanyCreationForm, CompanyChangeForm
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -104,16 +104,24 @@ def edit_company(request, company_id):
     }
     return render(request, 'admn/edit_company.html', context)
 
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
+def pending(request):
+    if 'query' in request.GET:
+        p_user = MyUser.objects.filter(first_name__contains=request.GET['query'], is_admin = False, is_active=False).order_by('-id')
+    else:
+        p_user = MyUser.objects.filter(is_admin = False, is_active=False).order_by('-id')
+    return render(request, 'admn/p_user_list.html', {'p_user': p_user})
+
+
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def users(request):
 
     if 'query' in request.GET:
-        p_user = MyUser.objects.filter(first_name__contains=request.GET['query'], is_admin = False, is_active=False).order_by('-id')
         user = MyUser.objects.filter(first_name__contains=request.GET['query'], is_admin=False, is_active=True).order_by('-id')
     else:
-        p_user = MyUser.objects.filter(is_admin = False, is_active=False).order_by('-id')
         user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
-    return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
+    return render(request, 'admn/user_list.html', {'user': user})
 
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def accept_user(request, user_id):
@@ -163,6 +171,7 @@ def view_user(request, user_id):
     else:
         return render(request, 'admn/view_user.html')
 
+
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def delete_user2(request, user_id):
     curr_user = MyUser.objects.get(pk=user_id)
@@ -171,3 +180,13 @@ def delete_user2(request, user_id):
     user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
 
     return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
+
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
+def applications(request):
+
+    if 'query' in request.GET:
+        application = Applications.objects.filter(company__company_name__contains=request.GET['query'])
+    else:
+        application = Applications.objects.all()
+    return render(request, 'admn/applications_page.html', {'application': application})

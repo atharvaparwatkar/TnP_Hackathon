@@ -31,7 +31,8 @@
 
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
-{#            <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>#}
+            <li><a href="{% url 'admn:admnindex' %}">Home</a></li>
+            <li><a href="{% url 'admn:admnindex' %}">Welcome {{ request.user.email }}</a></li>
 {#            <li><a href="http://127.0.0.1:8000/forum/2">Forum</a></li>#}
               {#<li><a href="{% url 'forum:forum-detail' %}/2">Forum</a></li>#}
 {#            <li><a href="{% url 'home:for_students' %}">For Students</a></li>#}
