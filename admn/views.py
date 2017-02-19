@@ -6,6 +6,7 @@ from .admin import CompanyCreationForm, CompanyChangeForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 
+
 def isUserAdmin(MyUser):
     if MyUser.is_authenticated:
         if MyUser.is_admin == True:
@@ -15,9 +16,11 @@ def isUserAdmin(MyUser):
     else:
         return False
 
+
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def admn_index(request):
     return render(request, 'admn/admn_index.html')
+
 
 def admn_login(request):
     if request.method == 'POST':
@@ -41,9 +44,11 @@ def admn_login(request):
                           {'error_message': "Invalid Credentials"})
     return render(request, 'admn/admn_login.html')
 
+
 def admn_logout(request):
     logout(request)
     return redirect('home:home')
+
 
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def companies(request):
@@ -61,6 +66,7 @@ Company_Type = [
     'Management',
 ]
 
+
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def add_company(request):
     form = CompanyCreationForm(data=request.POST)
@@ -70,6 +76,8 @@ def add_company(request):
     if request.method == 'POST':
         if form.is_valid():
             company = form.save()
+            company.branch = '; '.join(request.POST.getlist('branch'))
+            # return HttpResponse(company.branch)
             company.save()
             # msg = "Changes Saved."
             # return render(request, 'dashboard/edit_prof.html', {'msg': 'Changes Saved'})
@@ -89,20 +97,20 @@ def edit_company(request, company_id):
 
     if request.method == 'POST':
         if form.is_valid():
-            user = form.save()
-            user.save()
+            company = form.save()
+            company.branch = '; '.join(request.POST.getlist('branch'))
+            company.save()
+            company.last_date = company.last_date.strftime('%Y-%m-%d')
             msg = "Changes Saved."
-            return render(request, 'admn/edit_company.html', {'msg': 'Changes Saved'})
+            return render(request, 'admn/edit_company.html', {
+                'company': company,
+                'msg'       : 'Changes Saved'
+            })
 
     company = Companies.objects.get(pk=company_id)
     company.last_date = company.last_date.strftime('%Y-%m-%d')
 
-    context = {
-        'company': company,
-        # 'msg'       : msg,
-        'form'      : form,
-    }
-    return render(request, 'admn/edit_company.html', context)
+    return render(request, 'admn/edit_company.html', {'company': company})
 
 
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
@@ -123,6 +131,7 @@ def users(request):
         user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
     return render(request, 'admn/user_list.html', {'user': user})
 
+
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def accept_user(request, user_id):
 
@@ -134,6 +143,7 @@ def accept_user(request, user_id):
 
     return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
 
+
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def delete_user(request, user_id):
     curr_user = MyUser.objects.get(pk=user_id)
@@ -142,6 +152,7 @@ def delete_user(request, user_id):
     user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
 
     return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
+
 
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def view_user(request, user_id):

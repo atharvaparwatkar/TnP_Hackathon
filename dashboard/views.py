@@ -15,9 +15,9 @@ def dashboard(request):
     # if request.method == 'POST':
     #     if request.user.is_authenticated:
             context = {
-                'management_companies': Companies.objects.filter(company_type='Management'),
-                'it_companies': Companies.objects.filter(company_type='IT'),
-                'core_companies': Companies.objects.filter(company_type='Core'),
+                'management_companies': Companies.objects.filter(company_type='Management', branch__contains=request.user.branch),
+                'it_companies': Companies.objects.filter(company_type='IT', branch__contains=request.user.branch),
+                'core_companies': Companies.objects.filter(company_type='Core', branch__contains=request.user.branch),
                 'enr_no'    : request.user.enr_no,
                 'id_no'     : request.user.id_no,
                 'cgpa'      : request.user.cgpa,
