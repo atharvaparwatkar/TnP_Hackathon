@@ -11,8 +11,11 @@ urlpatterns = [
     url(r'^companies/(?P<company_id>[0-9]+)/$', views.edit_company, name="edit_companies"),
     url(r'^companies/$', views.companies, name="companies"),
     url(r'^users/$', views.users, name="users"),
+    url(r'^pusers/$', views.pending, name="pending"),
     url(r'^users/(?P<user_id>[0-9]+)/$', views.accept_user, name="acceptuser"),
     url(r'^users/(?P<user_id>[0-9]+)d/$', views.delete_user, name="deleteuser"),
     url(r'^users/(?P<user_id>[0-9]+)v/$', views.view_user, name="viewuser"),
     url(r'^users/(?P<user_id>[0-9]+)d2/$', views.delete_user2, name="deleteuserf"),
+    url(r'^applications/$', views.applications, name='applications'),
+
 ]

@@ -52,6 +52,18 @@ class UserChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
+class EditApplication(forms.ModelForm):
+    """A form for updating users. Includes all the fields on
+    the user, but replaces the password field with admin's
+    password hash display field.
+    """
+    # password = ReadOnlyPasswordHashField()
+
+    class Meta:
+        model = Applications
+        fields = ('f_name', 'l_name', 'address')
+
+
 class EditProfileForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's

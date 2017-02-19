@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^(?P<company_id>[0-9]+)/$', views.company_details, name='company_details'),
     url(r'^register/$', views.apply, name='apply'),
     url(r'^apply/(?P<company_id>[0-9]+)/$', views.app_form, name='app_form'),
-
+    url(r'^view_appl/(?P<app_id>[0-9]+)/$', views.view_appl, name='view_appl'),
+    url(r'^edit_appl/(?P<app_id>[0-9]+)/$', views.edit_appl, name='edit_appl'),
 ]
