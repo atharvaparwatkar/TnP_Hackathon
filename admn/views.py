@@ -129,10 +129,11 @@ def accept_user(request, user_id):
     curr_user = MyUser.objects.get(pk = user_id)
     curr_user.is_active = not curr_user.is_active
     curr_user.save()
-    p_user = MyUser.objects.filter(is_admin=False, is_active=False).order_by('-id')
-    user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
+    # p_user = MyUser.objects.filter(is_admin=False, is_active=False).order_by('-id')
+    # user = MyUser.objects.filter(is_admin=False, is_active=True).order_by('-id')
 
-    return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
+    return redirect('admn:users')
+    # return render(request, 'admn/user_list.html', {'user': user, 'p_user': p_user})
 
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
 def delete_user(request, user_id):
