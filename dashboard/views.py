@@ -8,6 +8,7 @@ from .admin import EditProfileForm
 from datetime import date
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template.defaultfilters import slugify
+from django.core.files.storage import FileSystemStorage
 import json
 
 @login_required
@@ -47,10 +48,14 @@ def signup(request):
                 'WP': 'WP',
             }
             return render(request, 'dashboard/signup.html', context)
+        fs = FileSystemStorage()
+        file = fs.save(form.resume.name, form.resume)
+
         user = form.save(commit=False)
         email = form.cleaned_data['email']
         password = form.cleaned_data['password1']
         user.set_password(password)
+        user.resume = file
         user.is_active = False
         user.is_admin = False
         user.save()
