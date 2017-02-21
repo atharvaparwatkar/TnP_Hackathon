@@ -17,5 +17,7 @@ urlpatterns = [
     url(r'^users/(?P<user_id>[0-9]+)v/$', views.view_user, name="viewuser"),
     url(r'^users/(?P<user_id>[0-9]+)d2/$', views.delete_user2, name="deleteuserf"),
     url(r'^applications/$', views.applications, name='applications'),
-
+    url(r'^news/$', views.list_news, name='news-list'),
+    url(r'^news/add$', views.add_news, name='news-add'),
+    url(r'^news/(?P<news_id>[0-9]+)/$', views.delete_news, name='delete-news'),
 ]

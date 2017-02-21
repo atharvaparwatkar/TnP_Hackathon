@@ -116,44 +116,15 @@
                         </div>
                         <div class="col-xm-7 col-md-7">
 {#                            <input id="id_cgpa" maxlength="5" name="cgpa" class="form-control" style="width: 40%; display:inline-block; margin-bottom: 10px" type="number" value="{{ form.cgpa }}" required />#}
-                            <select class="form-control" style="margin-bottom: 10px; width: 40%;" id="id_branch" name="branch" required>
-                                        <option value="" selected="selected">Branch</option>
-                                        <option value="CSE"
-                                            {% if company.branch == 'CSE' %}
-                                                selected
-                                            {% endif %}
-                                            >Computer Science &amp; Engineering</option>
-                                        <option value="ARCH"
-                                            {% if company.branch == 'ARCH' %}
-                                                selected
-                                            {% endif %}
-                                            >Architecture</option>
-                                        <option value="MECH"
-                                            {% if company.branch == 'MECH' %}
-                                                selected
-                                            {% endif %}
-                                            >Mechanical Engineering</option>
-                                        <option value="CIV"
-                                            {% if company.branch == 'CIV' %}
-                                                selected
-                                            {% endif %}
-                                            >Civil Engineering</option>
-                                        <option value="CHEM"
-                                            {% if company.branch == 'CHEM' %}
-                                                selected
-                                            {% endif %}
-                                            >Chemical Engineering</option>
-                                        <option value="META"
-                                            {% if company.branch == 'META' %}
-                                                selected
-                                            {% endif %}
-                                            >Metallurgy</option>
-                                        <option value="MIN"
-                                            {% if company.branch == 'MIN' %}
-                                                selected
-                                            {% endif %}
-                                            >Mining</option>
-                            </select>
+                            <input type="checkbox" name="branch" value="CSE" {% if 'CSE' in company.branch %}checked{% endif %}> Computer Science & Engineering <br>
+                            <input type="checkbox" name="branch" value="MECH" {% if 'MECH' in company.branch %}checked{% endif %}> Mechanical Engineering <br>
+                            <input type="checkbox" name="branch" value="CHEM" {% if 'CHEM' in company.branch %}checked{% endif %}> Chemical Engineering <br>
+                            <input type="checkbox" name="branch" value="CIV" {% if 'CIV' in company.branch %}checked{% endif %}> Civil Engineering <br>
+                            <input type="checkbox" name="branch" value="META" {% if 'META' in company.branch %}checked{% endif %}> Metallurgy <br>
+                            <input type="checkbox" name="branch" value="MIN" {% if 'MIN' in company.branch %}checked{% endif %}> Mining <br>
+                            <input type="checkbox" name="branch" value="ARCH" {% if 'ARCH' in company.branch %}checked{% endif %}> Architecture <br>
+                            <input type="checkbox" name="branch" value="EEE" {% if 'EEE' in company.branch %}checked{% endif %}> Electrical and Electronics Engineering <br>
+                            <input type="checkbox" name="branch" value="ECE" {% if 'ECE' in company.branch %}checked{% endif %}> Electronics and Communication Engineering <br>
                         </div>
                     </div>
                         {#              <input class="btn btn-primary signup" type="submit" style="float: right" value="Save Changes">#}

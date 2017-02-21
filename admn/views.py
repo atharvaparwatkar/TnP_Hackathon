@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from dashboard.models import Companies, MyUser, Applications
+from home.models import RecentNews
 from django.contrib.auth import authenticate, login, logout
 from .admin import CompanyCreationForm, CompanyChangeForm
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -70,6 +71,8 @@ def add_company(request):
     if request.method == 'POST':
         if form.is_valid():
             company = form.save()
+            company.branch = '; '.join(request.POST.getlist('branch'))
+            # return HttpResponse(company.branch)
             company.save()
             # msg = "Changes Saved."
             # return render(request, 'dashboard/edit_prof.html', {'msg': 'Changes Saved'})
@@ -89,20 +92,20 @@ def edit_company(request, company_id):
 
     if request.method == 'POST':
         if form.is_valid():
-            user = form.save()
-            user.save()
+            company = form.save()
+            company.branch = '; '.join(request.POST.getlist('branch'))
+            company.save()
+            company.last_date = company.last_date.strftime('%Y-%m-%d')
             msg = "Changes Saved."
-            return render(request, 'admn/edit_company.html', {'msg': 'Changes Saved'})
+            return render(request, 'admn/edit_company.html', {
+                'company': company,
+                'msg'       : 'Changes Saved'
+            })
 
     company = Companies.objects.get(pk=company_id)
     company.last_date = company.last_date.strftime('%Y-%m-%d')
 
-    context = {
-        'company': company,
-        # 'msg'       : msg,
-        'form'      : form,
-    }
-    return render(request, 'admn/edit_company.html', context)
+    return render(request, 'admn/edit_company.html', {'company': company})
 
 
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
@@ -191,3 +194,33 @@ def applications(request):
     else:
         application = Applications.objects.all()
     return render(request, 'admn/applications_page.html', {'application': application})
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
+def add_news(request):
+    if request.method == 'POST':
+        newnews = RecentNews()
+
+        newnews.news = request.POST['news']
+        newnews.link = request.POST['link']
+        newnews.post_date = request.POST['post_date']
+
+        newnews.save()
+
+        return redirect('admn:admnindex')
+
+    return render(request, 'admn/add_news.html')
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
+def list_news(request):
+    news = RecentNews.objects.all().order_by('-post_date')
+
+    return render(request, 'admn/news_list.html', {'all_news': news})
+
+@user_passes_test(isUserAdmin, login_url='/admn/login/')
+def delete_news(request, news_id):
+    news = RecentNews.objects.get(pk=news_id)
+
+    news.delete()
+
+    return redirect('admn:news-list')
+

@@ -305,7 +305,7 @@ def company_details(request, company_id):
         data['last_date'] = company.last_date
         data['id'] = company.pk
 
-        if request.user.cgpa >= company.req_cgpa:
+        if request.user.cgpa >= company.req_cgpa and request.user.branch in company.branch:
             data['can_apply'] = 'true'
         else:
             data['can_apply'] = 'false'
