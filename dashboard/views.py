@@ -267,7 +267,7 @@ def app_form(request, company_id):
             application.state = request.POST['state']
             application.country = request.POST['country']
             application.zip = request.POST['zip']
-
+            # application.result = request.POST['result']
             application.company = Companies.objects.get(pk=company_id)
             application.user = request.user
             application.save()

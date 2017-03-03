@@ -68,8 +68,15 @@
            <div class="panel panel-info">
                   <div class="panel-heading">
                      <span style="font-size: 22px;"> {{ app.company }} </span>
-                      <span style="margin-right: 10px; float: right;"><a class=" btn btn-primary " href="{% url 'dashboard:edit_appl' app.id %}" style = "margin-right: 10px; float:right " > Edit </a></span>
+                      {% if app.result == 'Selected' %}
+                          <span><label style="color: whitesmoke; font-size: 22px" class="label-success">Selected</label></span>
+                      {% elif app.result == 'Rejected' %}
+                          <span style="color: whitesmoke"><label class="label-danger">Rejected</label></span>
+                      {% endif %}
                       <span style="margin-right: 10px;float: right;"><a class=" btn btn-primary " href="{% url 'dashboard:view_appl' app.id %}" style = "margin-right: 10px; float:right " > View </a></span>
+                      {% if app.result != 'Selected' and app.result != 'Rejected' %}
+                            <span style="margin-right: 10px; float: right;"><a class=" btn btn-primary " href="{% url 'dashboard:edit_appl' app.id %}" style = "margin-right: 10px; float:right " > Edit </a></span>
+                        {% endif %}
                   </div>
             </div>
         </div>

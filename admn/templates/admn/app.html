@@ -1,0 +1,41 @@
+{% extends 'admn/base.html' %}
+
+{% block title %}
+    <title>Current Application</title>
+{% endblock %}
+
+{% block content %}
+    <div class="content-box-large box-with-header" id="info">
+        <p><b>First Name: {{ f_name }}</b></p>
+        <br>
+        <p><b>Last Name: {{ l_name }}</b></p>
+        <br>
+        <p><b>Gender : {{ gender }}</b></p>
+        <br>
+        <p><b>Address : {{ address }}</b></p>
+        <br>
+        <p><b>Email : {{ email }}</b></p>
+        <br>
+        <p><b>Mobile No. : {{ mob_no }}</b></p>
+        <br>
+        <div class="row">
+                                <div class="col-xm-2 col-md-2 ">
+                                    <b><label for="id_cgpa">Result </label></b>
+                                </div>
+                                <div class="col-xm-1 col-md-1">
+                                    <b>:</b>
+                                </div>
+                                <div class="col-xm-5 col-md-5">
+                                    <label for="result_not_declared">Not appeared/Results not declared yet</label>
+                                    <input class="form-control" style="width: 40%; display:inline-block; margin-bottom: 10px" id="result_not_declared" maxlength="5" name="result" type="radio" value="True" checked="checked" />
+
+{#                                    <input id="id_cgpa" maxlength="5" name="cgpa" class="form-control" style="width: 40%; display:inline-block; margin-bottom: 10px" type="number" value="{{ form.cgpa }}" required />#}
+                                    <label for="result_yes">Yes</label>
+                                    <input class="form-control" style="width: 40%; display:inline-block; margin-bottom: 10px" id="result_yes" maxlength="5" name="result" type="radio" value="False" />
+                                    <label for="result_no">No</label>
+                                    <input class="form-control" style="width: 40%; display:inline-block; margin-bottom: 10px" id="result_no" maxlength="5" name="result" type="radio" value="False" />
+
+                                </div>
+                            </div>
+    </div>
+{% endblock %}

@@ -139,13 +139,18 @@ class Companies(models.Model):
 
 class Applications(models.Model):
     TITLES = {
-        ('Mr', 'Mr.'),
-        ('Ms', 'Ms.'),
-        ('Mrs', 'Mrs.'),
+        ('Mr', 'Mr'),
+        ('Ms', 'Ms'),
+        ('Mrs', 'Mrs'),
     }
     GENDER = {
         ('male', 'Male'),
         ('female', 'Female'),
+    }
+    RESULT = {
+        ('Not_Declared', 'Not_Declared'),
+        ('Selected', 'Selected'),
+        ('Rejected', 'Rejected'),
     }
 
     title = models.CharField(max_length=4, choices=TITLES)
@@ -153,7 +158,7 @@ class Applications(models.Model):
     m_name = models.CharField(max_length=100)
     l_name = models.CharField(max_length=100)
     gender = models.CharField(max_length=4, choices=GENDER)
-    dob = models.DateField(max_length=10)
+    dob = models.DateField(max_length=10, null=True)
     email = models.EmailField(max_length=100)
     mobile = models.IntegerField()
     address = models.CharField(max_length=250)
@@ -163,6 +168,7 @@ class Applications(models.Model):
     zip = models.IntegerField()
     company = models.ForeignKey(Companies, null=True, unique=False)
     user = models.ForeignKey(MyUser, null=True, unique=False)
+    result = models.CharField(max_length=50,null=True)
 
     def __str__(self):
         return self.email

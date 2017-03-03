@@ -4,6 +4,7 @@ from dashboard.models import Companies, MyUser, Applications
 from home.models import RecentNews
 from django.contrib.auth import authenticate, login, logout
 from .admin import CompanyCreationForm, CompanyChangeForm
+from .admin import EditApplication
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 
@@ -106,6 +107,67 @@ def edit_company(request, company_id):
     company.last_date = company.last_date.strftime('%Y-%m-%d')
 
     return render(request, 'admn/edit_company.html', {'company': company})
+
+
+def edit_appl(request, app_id):
+    application = Applications.objects.get(pk=app_id)
+    form = EditApplication(data=request.POST, instance=application)
+    msg = "Press 'Save Changes' to make changes."
+
+    if request.method == 'POST':
+
+        if form.is_valid():
+            application = form.save()
+            application.save()
+            context = {
+                'title': application.title,
+                'f_name': application.f_name,
+                'm_name': application.m_name,
+                'l_name': application.l_name,
+                'gender': application.gender,
+                'dob': application.dob,
+                'email': application.email,
+                'mob_no': application.mobile,
+                'address': application.address,
+                'city': application.city,
+                'state': application.state,
+                'country': application.country,
+                'zip': application.zip,
+                'result': application.result,
+                'msg': 'Changes Saved',
+            }
+            msg = "Changes Saved."
+
+            # return render(request, 'dashboard/edit_prof.html', {'msg': 'Changes Saved'})
+            return render(request, 'admn/edit_appl.html', context)
+    title = application.title
+    f_name = application.f_name
+    m_name = application.m_name
+
+    # if request.method == "POST":
+    #     cgpa = request.POST['cgpa']
+    #     MyUser.cgpa = cgpa
+
+    context = {
+        'management_companies': Companies.objects.filter(company_type='Management'),
+        'it_companies': Companies.objects.filter(company_type='IT'),
+        'core_companies': Companies.objects.filter(company_type='Core'),
+        'title': application.title,
+        'f_name': application.f_name,
+        'm_name': application.m_name,
+        'l_name': application.l_name,
+        'gender': application.gender,
+        'dob': application.dob,
+        'email': application.email,
+        'mob_no': application.mobile,
+        'address': application.address,
+        'city': application.city,
+        'state': application.state,
+        'country': application.country,
+        'zip': application.zip,
+        'result': application.result,
+    }
+    return render(request, 'admn/edit_appl.html', context)
 
 
 @user_passes_test(isUserAdmin, login_url='/admn/login/')
@@ -223,4 +285,7 @@ def delete_news(request, news_id):
     news.delete()
 
     return redirect('admn:news-list')
+
+
+
 

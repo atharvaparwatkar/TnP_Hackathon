@@ -61,7 +61,7 @@ class EditApplication(forms.ModelForm):
 
     class Meta:
         model = Applications
-        fields = ('f_name', 'l_name', 'address')
+        fields = ('title', 'f_name', 'l_name', 'address')
 
 
 class EditProfileForm(forms.ModelForm):

@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^news/$', views.list_news, name='news-list'),
     url(r'^news/add$', views.add_news, name='news-add'),
     url(r'^news/(?P<news_id>[0-9]+)/$', views.delete_news, name='delete-news'),
+    url(r'^edit_appl/(?P<app_id>[0-9]+)/$', views.edit_appl, name='edit_appl'),
+
 ]
