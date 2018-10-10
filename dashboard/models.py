@@ -7,6 +7,7 @@ from datetime import date
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
+        
         Creates and saves a User with the given email, date of
         birth and password.
         """
@@ -157,9 +158,9 @@ class Applications(models.Model):
     email = models.EmailField(max_length=500)
     mobile = models.IntegerField()
     address = models.CharField(max_length=1000)
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    country = models.CharField(max_length=50)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
     zip = models.IntegerField()
     company = models.ForeignKey(Companies, null=True, unique=False)
     user = models.ForeignKey(MyUser, null=True, unique=False)
