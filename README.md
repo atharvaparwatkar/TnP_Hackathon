@@ -1,1 +1,1 @@
-TNP Hackathod with backend
+TNP Hackathon with complete backend implemented
